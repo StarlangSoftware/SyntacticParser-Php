@@ -1,0 +1,29 @@
+{
+  "name": "olcaytaner/syntacticparser",
+  "version": "1.0.0",
+  "description": "Syntactic Parser library",
+  "type": "library",
+  "license": "GPL-3.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "olcaytaner\\SyntacticParser\\": "src/"
+    }
+  },
+  "authors": [
+    {
+      "name": "Olcay Taner YILDIZ",
+      "email": "olcay.yildiz@ozyegin.edu.tr",
+      "homepage": "https://www.ozyegin.edu.tr/tr/akademik-kadro/olcayyildiz"
+    }
+  ],
+  "require": {
+    "ext-mbstring": "*",
+    "ext-intl": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "11.4.0",
+    "olcaytaner/datastructure": "1.0.1",
+    "olcaytaner/dictionary": "1.0.3",
+    "olcaytaner/corpus": "1.0.2",
+    "olcaytaner/parsetree": "1.0.10"  }
+}

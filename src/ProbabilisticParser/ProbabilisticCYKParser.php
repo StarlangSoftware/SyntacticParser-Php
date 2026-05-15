@@ -54,7 +54,7 @@ class ProbabilisticCYKParser implements ProbabilisticParser
                             $rightNode = $table[$k + 1][$j]->getPartialParse($y);
                             $candidates = $pCfg->getRulesWithTwoNonTerminalsOnRightSide($leftNode->getData(), $rightNode->getData());
                             foreach ($candidates as $candidate) {
-                                $probability = log($candidate->getProbability()) + log($leftNode->getProbability()) + log($rightNode->getProbability());
+                                $probability = log($candidate->getProbability()) + $leftNode->getLogProbability() + $rightNode->getLogProbability();
                                 $table[$i][$j]->addPartialParse(new ProbabilisticParseNode($leftNode, $rightNode, $candidate->getLeftHandSide(), $probability));
                             }
                         }

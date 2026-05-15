@@ -278,7 +278,7 @@ class ContextFreeGrammar
         return -($lo + 1);
     }
 
-    public function __construct(string|TreeBank|null $item1, int|string|null $item2, int|null $item3)
+    public function __construct(string|TreeBank|null $item1 = null, int|string|null $item2 = null, int|null $item3 = null)
     {
         $this->dictionary = new CounterHashMap();
         $this->rules = [];
@@ -347,16 +347,16 @@ class ContextFreeGrammar
     public function getRulesWithLeftSideX(Symbol $X): array
     {
         $result = [];
-        $dummyRule = new Rule($X);
+        $dummyRule = new Rule($X, $X);
         $middle = $this->binarySearch($this->rules, $dummyRule, [Rule::class, "ruleLeftSideCompare"]);
         if ($middle >= 0) {
             $middleUp = $middle;
-            while ($middleUp >= 0 && $this->rules[$middleUp]->getLeftHandSide()->equals($X)) {
+            while ($middleUp >= 0 && $this->rules[$middleUp]->getLeftHandSide() == $X) {
                 $result[] = $this->rules[$middleUp];
                 $middleUp--;
             }
             $middleDown = $middle + 1;
-            while ($middleDown < count($this->rules) && $this->rules[$middleDown]->getLeftHandSide()->equals($X)) {
+            while ($middleDown < count($this->rules) && $this->rules[$middleDown]->getLeftHandSide() == $X) {
                 $result[] = $this->rules[$middleDown];
                 $middleDown++;
             }
@@ -407,14 +407,14 @@ class ContextFreeGrammar
         $middle = $this->binarySearch($this->rulesRightSorted, $dummyRule, [Rule::class, "ruleRightSideCompare"]);
         if ($middle >= 0) {
             $middleUp = $middle;
-            while ($middleUp >= 0 && $this->rulesRightSorted[$middleUp]->getRightHandSideAt(0)->equals($s)) {
+            while ($middleUp >= 0 && $this->rulesRightSorted[$middleUp]->getRightHandSideAt(0) == $s) {
                 if ($this->rulesRightSorted[$middleUp]->getType() == RuleType::TERMINAL) {
                     $result[] = $this->rulesRightSorted[$middleUp];
                 }
                 $middleUp--;
             }
             $middleDown = $middle + 1;
-            while ($middleDown < count($this->rulesRightSorted) && $this->rulesRightSorted[$middleDown]->getRightHandSideAt(0)->equals($s)) {
+            while ($middleDown < count($this->rulesRightSorted) && $this->rulesRightSorted[$middleDown]->getRightHandSideAt(0) == $s) {
                 if ($this->rulesRightSorted[$middleDown]->getType() == RuleType::TERMINAL) {
                     $result[] = $this->rulesRightSorted[$middleDown];
                 }
@@ -437,12 +437,12 @@ class ContextFreeGrammar
         $middle = $this->binarySearch($this->rulesRightSorted, $dummyRule, [Rule::class, "ruleRightSideCompare"]);
         if ($middle >= 0) {
             $middleUp = $middle;
-            while ($middleUp >= 0 && $this->rulesRightSorted[$middleUp]->getRightHandSideAt(0)->equals($s) && $this->rulesRightSorted[$middleUp]->getRightHandSize() == 1) {
+            while ($middleUp >= 0 && $this->rulesRightSorted[$middleUp]->getRightHandSideAt(0) == $s && $this->rulesRightSorted[$middleUp]->getRightHandSize() == 1) {
                 $result[] = $this->rulesRightSorted[$middleUp];
                 $middleUp--;
             }
             $middleDown = $middle + 1;
-            while ($middleDown < count($this->rulesRightSorted) && $this->rulesRightSorted[$middleDown]->getRightHandSideAt(0)->equals($s) && $this->rulesRightSorted[$middleDown]->getRightHandSize() == 1) {
+            while ($middleDown < count($this->rulesRightSorted) && $this->rulesRightSorted[$middleDown]->getRightHandSideAt(0) == $s && $this->rulesRightSorted[$middleDown]->getRightHandSize() == 1) {
                 $result[] = $this->rulesRightSorted[$middleDown];
                 $middleDown++;
             }
@@ -464,12 +464,12 @@ class ContextFreeGrammar
         $middle = $this->binarySearch($this->rulesRightSorted, $dummyRule, [Rule::class, "ruleRightSideCompare"]);
         if ($middle >= 0) {
             $middleUp = $middle;
-            while ($middleUp >= 0 && $this->rulesRightSorted[$middleUp]->getRightHandSideAt(0)->equals($A) && $this->rulesRightSorted[$middleUp]->getRightHandSideAt(1)->equals($B) && $this->rulesRightSorted[$middleUp]->getRightHandSize() == 2) {
+            while ($middleUp >= 0 && $this->rulesRightSorted[$middleUp]->getRightHandSideAt(0) == $A && $this->rulesRightSorted[$middleUp]->getRightHandSideAt(1) == $B && $this->rulesRightSorted[$middleUp]->getRightHandSize() == 2) {
                 $result[] = $this->rulesRightSorted[$middleUp];
                 $middleUp--;
             }
             $middleDown = $middle + 1;
-            while ($middleDown < count($this->rulesRightSorted) && $this->rulesRightSorted[$middleDown]->getRightHandSideAt(0)->equals($A) && $this->rulesRightSorted[$middleDown]->getRightHandSideAt(1)->equals($B) && $this->rulesRightSorted[$middleDown]->getRightHandSize() == 2) {
+            while ($middleDown < count($this->rulesRightSorted) && $this->rulesRightSorted[$middleDown]->getRightHandSideAt(0) == $A && $this->rulesRightSorted[$middleDown]->getRightHandSideAt(1) == $B && $this->rulesRightSorted[$middleDown]->getRightHandSize() == 2) {
                 $result[] = $this->rulesRightSorted[$middleDown];
                 $middleDown++;
             }
@@ -609,5 +609,14 @@ class ContextFreeGrammar
      */
     public function size(): int{
         return count($this->rules);
+    }
+
+    public function __toString(): string
+    {
+        $result = "";
+        foreach ($this->rules as $rule) {
+            $result .= $rule->__toString() . "\n";
+        }
+        return $result;
     }
 }

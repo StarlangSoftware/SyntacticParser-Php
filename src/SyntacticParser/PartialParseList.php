@@ -38,7 +38,7 @@ class PartialParseList
             $partialParse = $this->partialParses[$i];
             if ($partialParse instanceof ProbabilisticParseNode && $partialParse->getData()->getName() == $parseNode->getData()->getName()) {
                 if ($partialParse->getLogProbability() < $parseNode->getLogProbability()) {
-                    array_splice($this->partialParses, $i, 1, $parseNode);
+                    array_splice($this->partialParses, $i, 1, [$parseNode]);
                 }
                 $found = true;
                 break;

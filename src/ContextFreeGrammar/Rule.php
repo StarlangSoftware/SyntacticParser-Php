@@ -126,7 +126,7 @@ class Rule
         for ($i = 0; $i < count($this->rightHandSide) - 1; $i++) {
             if ($this->rightHandSide[$i] == $first && $this->rightHandSide[$i + 1] == $second) {
                 array_splice($this->rightHandSide, $i + 1, 1);
-                array_splice($this->rightHandSide, $i, 1, $with);
+                array_splice($this->rightHandSide, $i, 1, [$with]);
                 if (count($this->rightHandSide) == 2) {
                     $this->type = RuleType::TWO_NON_TERMINAL;
                 }

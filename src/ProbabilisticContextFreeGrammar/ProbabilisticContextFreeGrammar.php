@@ -71,7 +71,7 @@ class ProbabilisticContextFreeGrammar extends ContextFreeGrammar
         $this->minCount = $minCount;
     }
 
-    public function __construct(string|TreeBank|null $item1, int|string|null $item2, int|null $item3)
+    public function __construct(string|TreeBank|null $item1 = null, int|string|null $item2 = null, int|null $item3 = null)
     {
         $this->dictionary = new CounterHashMap();
         $this->rules = [];
